@@ -30,3 +30,21 @@
 *.exe
 *.out
 *.app
+
+# DISTHRO related
+*.a
+*.d
+*.o
+
+*.exe
+*.dll
+*.dylib
+*.so
+*.zip
+
+bin/
+build/
+dpf
+
+# Visual Studio Code related
+.vscode
