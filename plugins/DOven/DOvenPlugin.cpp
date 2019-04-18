@@ -18,12 +18,11 @@
 
 #include <cmath>
 
-#define FROM_DB(v) ((v) > -90.0f ? expf(v / 20.f * logf(10.f)) : 0.0f)
-#define TO_DB(v) ((v) > -90.0f ? 20.f * log10(v) : 0.0f)
-#define SIGN(v) ((v) >= 0.f ? 1.f : -1.f)
-#define FIXDENORMAL(v) ((!std::isnormal(v)) ? 0.f : v)
-#define YAMAHA_WAVESHAPER(v) (1.5f * v - (powf(v, 3) / 2.f)) // Yamaha function from Old digital racks
-
+inline float fromDb(float v) { return ((v) > -90.0f ? expf(v / 20.f * logf(10.f)) : 0.0f); }
+inline float toDb(float v) { return ((v) > -90.0f ? 20.f * log10(v) : 0.0f); }
+inline float sign(float v) { return ((v) >= 0.f ? 1.f : -1.f); }
+inline float fixDenormals(float v) { return ((!std::isnormal(v)) ? 0.f : v); }
+inline float yamahaDistortion(float v) { return (1.5f * v - (powf(v, 3) / 2.f)); } // Yamaha function from Old digital racks
 
 START_NAMESPACE_DISTRHO
 
@@ -153,15 +152,15 @@ void DOvenPlugin::run(const float **inputs, float **outputs, uint32_t frames)
             //Piece-wise clipping
             if (fabs(left) < (1.f - fHeat))
             {
-                left = YAMAHA_WAVESHAPER(left);
+                left = yamahaDistortion(left);
             }
             else
             {
-                left = SIGN(left) * (1.f - fHeat); // Hard Clipping
+                left = sign(left) * (1.f - fHeat); // Hard Clipping
             }
 
             //Compensate for gain rise
-            left = left * FROM_DB(-3.f);
+            left = left * fromDb(-3.f);
         }
 
         /*
@@ -169,7 +168,7 @@ void DOvenPlugin::run(const float **inputs, float **outputs, uint32_t frames)
         */
         if (fGain != 0.f)
         {
-            left = left * FROM_DB(fGain);
+            left = left * fromDb(fGain);
         }
 
         //Output
