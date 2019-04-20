@@ -11,5 +11,5 @@ pool:
 
 steps:
 - script: |
-    make
+    sudo apt install lv2-dev -y && make
   displayName: 'make'
