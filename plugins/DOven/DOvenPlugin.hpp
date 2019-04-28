@@ -19,7 +19,13 @@
 
 #include "DistrhoPlugin.hpp"
 
-#define FRAME_SIZE 4
+static const float denormalGuard = 1e-15f; // http://www.earlevel.com/main/2019/04/19/floating-point-denormals/
+static const uint32_t frameSize = 4;
+
+inline float fromDb(float v) { return ((v) > -90.0f ? expf(v / 20.f * logf(10.f)) : 0.0f); }
+inline float toDb(float v) { return ((v) > -90.0f ? 20.f * log10(v) : 0.0f); }
+inline float sign(float v) { return ((v) >= 0.f ? 1.f : -1.f); }
+inline float yamahaDistortion(float v) { return (1.5f * v - (powf(v, 3) / 2.f)); } // Yamaha function from Old digital racks
 
 START_NAMESPACE_DISTRHO
 
@@ -113,6 +119,7 @@ private:
     uint32_t clipping_flag_n1 = 1;
     uint32_t flag = 0;    
     float a, b, c, e, x_n, err, h0, h1, h2, h3, pol;
+    float left;
 
 
     DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DOvenPlugin)

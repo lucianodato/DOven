@@ -46,4 +46,4 @@ bin/
 build/
 
 # Visual Studio Code related
-.vscode
+.vscode/ipch

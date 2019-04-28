@@ -18,12 +18,6 @@
 
 #include <cmath>
 
-inline float fromDb(float v) { return ((v) > -90.0f ? expf(v / 20.f * logf(10.f)) : 0.0f); }
-inline float toDb(float v) { return ((v) > -90.0f ? 20.f * log10(v) : 0.0f); }
-inline float sign(float v) { return ((v) >= 0.f ? 1.f : -1.f); }
-inline float fixDenormals(float v) { return ((!std::isnormal(v)) ? 0.f : v); }
-inline float yamahaDistortion(float v) { return (1.5f * v - (powf(v, 3) / 2.f)); } // Yamaha function from Old digital racks
-
 START_NAMESPACE_DISTRHO
 
 // -----------------------------------------------------------------------
@@ -35,7 +29,7 @@ DOvenPlugin::DOvenPlugin()
     loadProgram(0);
 
     // set latency
-    setLatency(FRAME_SIZE);
+    setLatency(frameSize);
 
     // reset
     deactivate();
@@ -162,21 +156,23 @@ void DOvenPlugin::run(const float **inputs, float **outputs, uint32_t frames)
 
     for (uint32_t i = 0; i < frames; ++i)
     {
+        left = in1[i] + denormalGuard;
+
         /*
             Clipping
         */
         if (fHeat > 0.f)
         {
             //Piece-wise clipping
-            if (fabs(in1[i]) <= L)
+            if (fabs(left) <= L)
             {
                 //Apply distortion and compensate for gain rise
-                yn = yamahaDistortion(in1[i])*fromDb(-3.f);
+                yn = yamahaDistortion(left)*fromDb(-3.f);
                 clipping_flag = 0;
             }
             else
             {
-                yn = sign(in1[i])*L; // Hard Clipping
+                yn = sign(left)*L; // Hard Clipping
                 clipping_flag = 1;
             }
 
@@ -190,9 +186,9 @@ void DOvenPlugin::run(const float **inputs, float **outputs, uint32_t frames)
                 {
                     flag = 0;
                     
-                    a = (-1.f/6.f)*xn3 + (1.f/2.f)*xn2 - (1.f/2.f)*xn1 + (1.f/6.f)*in1[i];
-                    b = xn3 - (5.f/2.f)*xn2 + 2.f*xn1 - (1.f/2.f)*in1[i];
-                    c = (-11.f/6.f)*xn3 + 3.f*xn2 - (3.f/2.f)*xn1 + (1.f/3.f)*in1[i];
+                    a = (-1.f/6.f)*xn3 + (1.f/2.f)*xn2 - (1.f/2.f)*xn1 + (1.f/6.f)*left;
+                    b = xn3 - (5.f/2.f)*xn2 + 2.f*xn1 - (1.f/2.f)*left;
+                    c = (-11.f/6.f)*xn3 + 3.f*xn2 - (3.f/2.f)*xn1 + (1.f/3.f)*left;
                     e = xn3;
 
                     // Newton - Raphson
@@ -237,7 +233,7 @@ void DOvenPlugin::run(const float **inputs, float **outputs, uint32_t frames)
         }
         else
         {
-            yn = in1[i];
+            yn = left;
         }
         
         // Move samples back
@@ -248,7 +244,7 @@ void DOvenPlugin::run(const float **inputs, float **outputs, uint32_t frames)
 
         xn3 = xn2;
         xn2 = xn1;
-        xn1 = in1[i]; 
+        xn1 = left; 
 
         /*
             Output Gain
