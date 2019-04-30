@@ -14,9 +14,5 @@ steps:
 - checkout: self
   submodules: true
 - script: |
-    sudo apt-get update
-    sudo apt-get install -y libgl1-mesa-dev pkg-config build-essential
-  displayName: 'Install dependencies'
-- script: |
     make
   displayName: 'Building'
