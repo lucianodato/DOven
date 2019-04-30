@@ -24,4 +24,14 @@ jobs:
     - script: |
         make
       displayName: 'Building'
+  - job: WinBuild
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+    - checkout: self
+      submodules: true
+    - script: |
+        make
+      displayName: 'Building'
+
 
