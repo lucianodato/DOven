@@ -13,17 +13,22 @@ jobs:
     - checkout: self
       submodules: true
     - script: |
-        make
+        ./.azure-pipelines/before_install.sh
+        ./.azure-pipelines/install.sh
+        ./.azure-pipelines/script-linux.sh
+        ./.azure-pipelines/script-macos.sh
+        ./.azure-pipelines/script-win32.sh
+        ./.azure-pipelines/script-win64.sh
       displayName: 'Building'
-  - job: MacBuild
-    pool:
-      vmImage: 'macOS-10.13'
-    steps:
-    - checkout: self
-      submodules: true
-    - script: |
-        make
-      displayName: 'Building'
+  # - job: MacBuild
+  #   pool:
+  #     vmImage: 'macOS-10.13'
+  #   steps:
+  #   - checkout: self
+  #     submodules: true
+  #   - script: |
+  #       make
+  #     displayName: 'Building'
   # - job: WinBuild
   #   pool:
   #     vmImage: 'vs2017-win2016'
