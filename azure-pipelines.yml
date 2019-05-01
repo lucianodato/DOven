@@ -30,7 +30,9 @@ jobs:
     steps:
     - checkout: self
       submodules: true
-    - script: vcpkg install opengl
+    - script: | 
+        vcpkg install opengl
+        vcpkg integrate install #to make available installed packages
       displayName: Vcpkg install dependencies
     - script: |
         make
