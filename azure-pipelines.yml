@@ -24,18 +24,18 @@ jobs:
     - script: |
         make
       displayName: 'Building'
-  - job: WinBuild
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-    - checkout: self
-      submodules: true
-    - script: | 
-        vcpkg install opengl
-        vcpkg integrate install #to make available installed packages
-      displayName: Vcpkg install dependencies
-    - script: |
-        make
-      displayName: 'Building'
+  # - job: WinBuild
+  #   pool:
+  #     vmImage: 'vs2017-win2016'
+  #   steps:
+  #   - checkout: self
+  #     submodules: true
+  #   - script: | 
+  #       vcpkg install opengl
+  #       vcpkg integrate install #to make available installed packages
+  #     displayName: Vcpkg install dependencies
+  #   - script: |
+  #       make
+  #     displayName: 'Building'
 
 
