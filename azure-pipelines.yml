@@ -13,12 +13,12 @@ jobs:
     - checkout: self
       submodules: true
     - script: |
-        ./.azure-pipelines/before_install.sh
-        ./.azure-pipelines/install.sh
-        ./.azure-pipelines/script-linux.sh
-        ./.azure-pipelines/script-macos.sh
-        ./.azure-pipelines/script-win32.sh
-        ./.azure-pipelines/script-win64.sh
+        sudo ./.azure-pipelines/before_install.sh
+        sudo ./.azure-pipelines/install.sh
+        sudo ./.azure-pipelines/script-linux.sh
+        sudo ./.azure-pipelines/script-macos.sh
+        sudo ./.azure-pipelines/script-win32.sh
+        sudo ./.azure-pipelines/script-win64.sh
       displayName: 'Building'
   # - job: MacBuild
   #   pool:
