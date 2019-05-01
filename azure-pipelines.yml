@@ -30,10 +30,8 @@ jobs:
     steps:
     - checkout: self
       submodules: true
-    - script: .\vcpkg\bootstrap-vcpkg.bat
-      displayName: Bootstrap vcpkg
-    - script: .\vcpkg\vcpkg.exe install opengl --vcpkg-root .\vcpkg
-      displayName: vcpkg install dependencies
+    - script: vcpkg install opengl
+      displayName: Vcpkg install dependencies
     - script: |
         make
       displayName: 'Building'
