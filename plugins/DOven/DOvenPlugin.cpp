@@ -180,11 +180,11 @@ void DOvenPlugin::run(const float **inputs, float **outputs, uint32_t frames)
             {
                 if ((clipping_flag - clipping_flag_n1) != 0)
                 {
-                    flag = 1;
+                    flag_poly = 1;
                 }
-                else if (flag == 1)
+                else if (flag_poly == 1)
                 {
-                    flag = 0;
+                    flag_poly = 0;
                     
                     a = (-1.f/6.f)*xn3 + (1.f/2.f)*xn2 - (1.f/2.f)*xn1 + (1.f/6.f)*left;
                     b = xn3 - (5.f/2.f)*xn2 + 2.f*xn1 - (1.f/2.f)*left;

@@ -15,3 +15,6 @@ make clean >/dev/null
 
 # Build now
 make
+
+# Compress build in a zip file
+zip -9 -r doven-$TRAVIS_TAG-macos.zip /bin/*

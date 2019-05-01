@@ -16,3 +16,25 @@ script:
   - sh ${TRAVIS_BUILD_DIR}/.travis/script-macos.sh
   - sh ${TRAVIS_BUILD_DIR}/.travis/script-win32.sh
   - sh ${TRAVIS_BUILD_DIR}/.travis/script-win64.sh
+
+# before_deploy:
+#   # Set up git user name and tag this commit
+#   - git config --local user.name "Luciano Dato"
+#   - git config --local user.email "lucianodato@gmail.com"
+#   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+#   - git tag $TRAVIS_TAG
+
+deploy:
+  provider: releases
+  api_key:
+    secure: key
+  file:
+    - doven-$TRAVIS_TAG-linux.zip
+    - doven-$TRAVIS_TAG-macos.zip
+    - doven-$TRAVIS_TAG-win32.zip
+    - doven-$TRAVIS_TAG-win64.zip
+  skip_cleanup: true
+  overwrite: true
+  # draft: true
+  on:
+    tags: true
