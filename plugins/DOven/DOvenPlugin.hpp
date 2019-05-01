@@ -114,10 +114,10 @@ private:
     bool fPolyB;
     float fGain;
     float mu, d;
-    float xn1 = 0.f, xn2 = 0.f, xn3 = 0.f, yn = 0.f, yn1 = 0.f, yn2 = 0.f, yn3 = 0.f;
-    uint32_t clipping_flag = 0;
-    uint32_t clipping_flag_n1 = 1;
-    uint32_t flag_poly = 0;    
+    float xn1, xn2, xn3, yn, yn1, yn2, yn3;
+    uint32_t clipping_flag;
+    uint32_t clipping_flag_n1;
+    uint32_t flag_poly;    
     float a, b, c, e, x_n, err, h0, h1, h2, h3, pol;
     float left;
 

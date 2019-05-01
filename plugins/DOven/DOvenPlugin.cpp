@@ -25,7 +25,13 @@ START_NAMESPACE_DISTRHO
 DOvenPlugin::DOvenPlugin()
     : Plugin(paramCount, 1, 0) // 1 program, 0 states
 {
-    // set default values
+    //initialize class variables
+    xn1 = 0.f; xn2 = 0.f; xn3 = 0.f; yn = 0.f; yn1 = 0.f; yn2 = 0.f; yn3 = 0.f;
+    clipping_flag = 0;
+    clipping_flag_n1 = 1;
+    flag_poly = 0;    
+
+    // set default values for default preset
     loadProgram(0);
 
     // set latency

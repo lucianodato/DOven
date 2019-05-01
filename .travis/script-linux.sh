@@ -14,4 +14,4 @@ make clean >/dev/null
 make
 
 # Compress build in a zip file
-zip -9 -r doven-$TRAVIS_TAG-linux.zip /bin/*
+zip -9 -r doven-$TRAVIS_TAG-linux.zip /bin
