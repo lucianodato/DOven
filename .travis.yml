@@ -1,27 +1,24 @@
 os:
-  - linux
-
+- linux
 sudo: required
 dist: trusty
-
 languages: c++
 compiler: gcc
-
 before_install:
-  - sh ${TRAVIS_BUILD_DIR}/.travis/before_install.sh
+- sh ${TRAVIS_BUILD_DIR}/.travis/before_install.sh
 install:
-  - sh ${TRAVIS_BUILD_DIR}/.travis/install.sh
+- sh ${TRAVIS_BUILD_DIR}/.travis/install.sh
 script:
-  - sh ${TRAVIS_BUILD_DIR}/.travis/script-linux.sh
-  - sh ${TRAVIS_BUILD_DIR}/.travis/script-macos.sh
-  - sh ${TRAVIS_BUILD_DIR}/.travis/script-win32.sh
-  - sh ${TRAVIS_BUILD_DIR}/.travis/script-win64.sh
+- sh ${TRAVIS_BUILD_DIR}/.travis/script-linux.sh
+- sh ${TRAVIS_BUILD_DIR}/.travis/script-macos.sh
+- sh ${TRAVIS_BUILD_DIR}/.travis/script-win32.sh
+- sh ${TRAVIS_BUILD_DIR}/.travis/script-win64.sh
 
 deploy:
   provider: releases
   api_key:
-    secure: key
-  file:
+    secure: EUY9oVcMxIl7dIxHc5Vjzf5CjUi8qxXdjf60N0rBSu3nLCkSHUe9+suRyWmgpQETEmr+xnTTsteT9E1GzN9HNQYLM5L3LPYzS54PMf5SkdSIz5Uaa8lOnnc3Y6vvA+vLChBYqLoNbVYamyiRWOygnlvnMn1R12rB4Ft9ENQpj3d1b/KAOcYFvs59x0RoJK9CLzpmpb1jP55lnjAethl+CIay5cSL31ERKUpy7Cc2mFOydXvjfF6NAguWWfAwfhsgmg/7lSgruj5kEMz+jyjnXwzXzcs2qD+5FUanAvRvBK2IWPQ9WdQjMU/JvG1/sIPY+/aRvaMKp8rsF50uL80kTToRXgOmIRoVKXV0ZSW5Oor1d/jGTHjM6Ek8DTwAAs4C/8wTe3VaCKfVEK+UzxWLxweuCQd3HMkymDbnCJh+R7ouaGnkX6TZU3lJSoXJIdxj1TssEbePduS2LvtyopFgO5wpSYp/zl2I+UfOjESKzwFzss9xrPBKgZvEHzhtrI9O0TpcjVWly5S4i5myWUEIkQ3u3Uboxbn/TDcF+O1p6YJMsjU9YY+CUGR4UDfTaTl8mv2SoHzk4AyR5vzdSRron83gjGXj9ic7uEu7rzqfa4G5+r+FyTOt8JyPYLBP//Gq07qq6tig011ao/2QjDjCgLXtT8gfRV9rW4DcGch4DSc=
+  file: 
     - doven-$TRAVIS_TAG-linux.zip
     - doven-$TRAVIS_TAG-macos.zip
     - doven-$TRAVIS_TAG-win32.zip
